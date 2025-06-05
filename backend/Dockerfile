@@ -14,5 +14,6 @@ RUN npm install
 # Copy the rest of our application from the local file system to the Docker image
 COPY . .
 
+EXPOSE 8080
 # Run our application
 CMD ["npm", "start"]
