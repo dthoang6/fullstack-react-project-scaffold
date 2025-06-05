@@ -1,35 +1,26 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { Blog } from './Blog.jsx'
 
-function App() {
-  const [count, setCount] = useState(0)
-
+const queryClient = new QueryClient()
+export function App() {
   return (
-    <>
-      <div>
-        <a href='https://vite.dev' target='_blank'>
-          <img src={viteLogo} className='logo' alt='Vite logo' />
-        </a>
-        <a href='https://react.dev' target='_blank'>
-          <img src={reactLogo} className='logo react' alt='React logo' />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className='card'>
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className='read-the-docs'>
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    <QueryClientProvider client={queryClient}>
+      <Blog />
+    </QueryClientProvider>
   )
 }
-
-export default App
+/**
+ * - We use the App component for setting up TanStack Query libraries and contexts
+ * - Now we can make use of TanStack Query inside our Blog Component and its children
+ *
+ * - It initializing TanStack Query so that the app can manage data fetching, caching, and updating efficiently
+ *
+ * - QueryClient: a class that manages the cache and state of all your queries, the object will stores all the cached queries, their statuses (loading, error, success) and handles background refetching.
+ *
+ * - QueryClientProvider: a React context provider that makes the client available to your entire component tree similar to how a Redux provide works. So any component inside Blog can use useQuery, useMutation
+ *
+ * - Server State Fetch/cache API data: TanStack Query
+ * - Client State: React useState, Context API, Redux
+ * - GraphQL data: Apollo Client
+ * - Server + client with Redux + RTK Query
+ */
